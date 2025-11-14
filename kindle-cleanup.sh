@@ -23,7 +23,7 @@ handle_clean_path() {
         echo "${dirs_to_remove[@]}"
         read -p "Do you want to delete the useless directories? (y/n) " confirm
         if [[ "$confirm" == "y" ]]; then
-            echo "$dirs_to_remove" | sed 's/$/.sdr/' | tee -a "$path"/removed_folders.txt | xargs -I{} rm -r "$path"/"{}"
+            echo "$dirs_to_remove" | sed 's/$/.sdr/' | tee -a "$path"/removed_folders.txt | tr '\n' '\0' | xargs -0 -I{} rm -r "$path/{}"
         fi
         echo -e "Useless .sdr folders have been removed, see \'$path/removed_folders.txt' for details."
     else 
